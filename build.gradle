@@ -454,6 +454,7 @@ javadoc {
 
 test {
     useJUnitPlatform {
+        includeTags 'dropdown'
         excludeTags 'DatabaseTest', 'FetcherTest', 'GUITest'
     }
 

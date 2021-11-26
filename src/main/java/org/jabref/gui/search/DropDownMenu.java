@@ -12,6 +12,7 @@ import org.controlsfx.control.textfield.CustomTextField;
 
 public class DropDownMenu {
     // DropDown Searchbar
+    public CustomTextField searchField;
     public PopOver searchbarDropDown;
     public Button authorButton;
     public Button journalButton;
@@ -45,6 +46,8 @@ public class DropDownMenu {
         // articleButton = new Button("Article");
         // bookButton = new Button("Book");
         // citationKeyButton = new Button("CitationKey");
+
+        this.searchField = searchField;
         Text titleLucene = new Text(" Lucene Search");
         Text titleRecent = new Text(" Recent Searches");
         recentSearch = new RecentSearch(globalSearchBar);
