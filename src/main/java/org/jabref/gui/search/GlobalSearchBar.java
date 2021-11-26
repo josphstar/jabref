@@ -89,7 +89,7 @@ public class GlobalSearchBar extends HBox {
     private static final PseudoClass CLASS_NO_RESULTS = PseudoClass.getPseudoClass("emptyResult");
     private static final PseudoClass CLASS_RESULTS_FOUND = PseudoClass.getPseudoClass("emptyResult");
 
-    private final CustomTextField searchField = SearchTextField.create();
+    public final CustomTextField searchField = SearchTextField.create();
     private final ToggleButton caseSensitiveButton;
     private final ToggleButton regularExpressionButton;
     private final ToggleButton fulltextButton;
