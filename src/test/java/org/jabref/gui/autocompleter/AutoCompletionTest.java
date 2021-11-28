@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import org.controlsfx.control.PopOver;
 import org.controlsfx.control.textfield.CustomTextField;
+import org.jabref.gui.search.SearchTextField;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +39,17 @@ public class AutoCompletionTest {
 
     private WordSuggestionProvider autoCompleter;
     private BibDatabase database;
-    BibEntry entry1, entry2;
+    BibEntry entry;
+    private PopOver searchbarDropDown;
+    private CustomTextField searchField;
+
+    @Start
+    public void start(Stage stage) {
+        this.searchbarDropDown = new PopOver();
+        this.searchField = SearchTextField.create();
+        stage.setScene(new Scene(new StackPane(new HBox(searchField)), 500, 500));
+        stage.show();
+    }
 
     @BeforeEach
     void setUp() throws Exception {
@@ -60,10 +71,10 @@ public class AutoCompletionTest {
 
     @Test
     void completeReturnsMultipleResultsInDropdown() {   //tests list of recommended words below searchbar
-        entry1 = new BibEntry();
-        entry1.setField(StandardField.TITLE, "testValueOne");
-        database.insertEntry(entry1);
-        BibEntry entryTwo = new BibEntry();
+        entry = new BibEntry();
+        entry.setField(StandardField.TITLE, "testValueOne");
+        database.insertEntry(entry);
+        searchField.appendText("testValueOne");
 
         Collection<String> result = autoCompleter.provideSuggestions(getRequest(("testValue")));
         assertEquals(Arrays.asList("testValueOne", "testValueTwo"), result);
