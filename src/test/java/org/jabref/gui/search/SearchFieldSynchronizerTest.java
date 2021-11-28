@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.control.ListView;
+import javafx.stage.Stage;
+
+import org.jabref.gui.Globals;
+import org.jabref.gui.JabRefFrame;
+import org.jabref.gui.StateManager;
+import org.jabref.gui.undo.CountingUndoManager;
+import org.jabref.preferences.PreferencesService;
 
 import org.controlsfx.control.textfield.CustomTextField;
 import org.junit.jupiter.api.Tag;
@@ -20,7 +28,7 @@ public class SearchFieldSynchronizerTest {
     SearchFieldSynchronizer searchFieldSynchronizer = new SearchFieldSynchronizer(searchField);
 
     @Test
-    void searchStringBuilderMixed() {
+    void searchStringBuilderBuildsMixedStringCorrectly() {
         JFXPanel fxPanel = new JFXPanel();
         searchField = new CustomTextField();
         searchFieldSynchronizer = new SearchFieldSynchronizer(searchField);
@@ -70,6 +78,31 @@ public class SearchFieldSynchronizerTest {
         searchItemList.add(item7);
 
         assertFalse(searchFieldSynchronizer.bracketsBalanced(searchItemList));
+    }
+
+    @Test
+    void RecentSearchRemovesDuplicates() {
+        Stage mainStage = new Stage();
+        JabRefFrame frame = new JabRefFrame(mainStage);
+        StateManager stateManager = new StateManager();
+        PreferencesService preferencesService = Globals.prefs;
+        CountingUndoManager undoManager = new CountingUndoManager();
+        GlobalSearchBar globalSearchBar = new GlobalSearchBar(frame, stateManager, preferencesService, undoManager);
+        RecentSearch recentSearch = new RecentSearch(globalSearchBar);
+
+        recentSearch.add("author:John");
+        recentSearch.add("Software Engineering");
+        recentSearch.add("title:programming");
+        recentSearch.add("author:John");
+        recentSearch.add("Software Engineering");
+
+
+        ListView<String> RecentSearches = new ListView<>();
+        RecentSearches.getItems().add("author:John");
+        RecentSearches.getItems().add("Software Engineering");
+        RecentSearches.getItems().add("title:programming");
+
+        assertEquals(recentSearch.getList().getItems().toString(), RecentSearches.getItems().toString());
     }
 }
 

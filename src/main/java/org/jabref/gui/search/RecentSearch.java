@@ -31,4 +31,8 @@ public class RecentSearch {
     public VBox getVBox() {
         return new VBox(RecentSearches);
     }
+
+    public ListView<String> getList() {
+        return RecentSearches;
+    }
 }
