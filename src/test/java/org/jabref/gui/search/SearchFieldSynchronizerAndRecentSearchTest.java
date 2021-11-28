@@ -1,6 +1,7 @@
 package org.jabref.gui.search;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("fast")
-public class SearchFieldSynchronizerTest {
+public class SearchFieldSynchronizerAndRecentSearchTest {
     CustomTextField searchField;
     SearchFieldSynchronizer searchFieldSynchronizer = new SearchFieldSynchronizer(searchField);
 
@@ -52,6 +53,20 @@ public class SearchFieldSynchronizerTest {
 
     @Test
     void textFieldToListTest() {
+        JFXPanel fxPanel = new JFXPanel();
+        searchField = new CustomTextField();
+        searchFieldSynchronizer = new SearchFieldSynchronizer(searchField);
+        searchField.setText("author:Jon OR title:\"Software Engineering\"");
+        ArrayList<String> list = searchFieldSynchronizer.textFieldToList();
+
+        String[] expectedList = new String[5];
+        expectedList[0] = "author:";
+        expectedList[1] = "Jon";
+        expectedList[2] = "OR";
+        expectedList[3] = "title:";
+        expectedList[4] = "\"Software Engineering\"";
+        assertEquals(new ArrayList<String>(Arrays.stream(expectedList).toList()), list);
+
     }
 
     @Test
@@ -103,6 +118,61 @@ public class SearchFieldSynchronizerTest {
         RecentSearches.getItems().add("title:programming");
 
         assertEquals(recentSearch.getList().getItems().toString(), RecentSearches.getItems().toString());
+    }
+
+    @Test
+    void SearchBarHighlightingWorks() {
+        JFXPanel fxPanel = new JFXPanel();
+        searchField = new CustomTextField();
+        searchFieldSynchronizer = new SearchFieldSynchronizer(searchField);
+        searchField.clear();
+        searchField.setStyle("-fx-border-color: blue");
+
+        // correct syntax
+        searchField.setText("author:testauthor AND title:TestTitle");
+
+        searchFieldSynchronizer.updateSearchItemList(searchFieldSynchronizer.textFieldToList());
+        searchFieldSynchronizer.syntaxHighlighting();
+        assertEquals("-fx-border-color: green", searchField.getStyle());
+
+        // wrong syntax
+        searchField.setText("AND author:test");
+
+        searchFieldSynchronizer.updateSearchItemList(searchFieldSynchronizer.textFieldToList());
+        searchFieldSynchronizer.syntaxHighlighting();
+        assertEquals("-fx-border-color: red", searchField.getStyle());
+    }
+
+    @Test
+    void addItemDoesNotCreateInvalidSearch() {
+        JFXPanel fxPanel = new JFXPanel();
+        searchField = new CustomTextField();
+        searchFieldSynchronizer = new SearchFieldSynchronizer(searchField);
+
+        SearchItem item1 = new SearchItem("logical","AND");
+        SearchItem item2 = new SearchItem("logical", "OR");
+
+        searchFieldSynchronizer.addSearchItem(item1);
+        searchFieldSynchronizer.addSearchItem(item2);
+
+        assertTrue(searchFieldSynchronizer.searchItemList.isEmpty());
+
+    }
+
+    @Test
+    void returnLatestReallyReturnsLatest() {
+        JFXPanel fxPanel = new JFXPanel();
+        searchField = new CustomTextField();
+        searchFieldSynchronizer = new SearchFieldSynchronizer(searchField);
+
+        searchFieldSynchronizer.addSearchItem("query","one");
+        searchFieldSynchronizer.addSearchItem("query","two");
+
+        SearchItem Three = new SearchItem("query", "three");
+        searchFieldSynchronizer.addSearchItem(Three);
+
+        assertEquals(Three, searchFieldSynchronizer.returnLatest(searchFieldSynchronizer.searchItemList));
+
     }
 }
 
