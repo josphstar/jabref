@@ -88,7 +88,7 @@ public class SearchFieldSynchronizer {
             }
         }
         searchString = str.toString();
-        System.out.println("searchStringBuilder: " + searchString);
+//        System.out.println("searchStringBuilder: " + searchString);
         return searchString;
     }
 
@@ -117,14 +117,5 @@ public class SearchFieldSynchronizer {
     public String getSearchString() {
         return searchString;
     }
-
-//    public String getLastItem() {
-//        SearchItem item = searchItemList.get(searchItemList.size() - 1);
-//        String lastItem = item.getItemType();
-//
-//        if (lastItem.endsWith(":")) {
-//
-//        }
-//    }
 
 }
