@@ -57,19 +57,19 @@ public class AutoCompletionTest {
         autoCompleter = new WordSuggestionProvider(StandardField.TITLE, database);
     }
 
-    @Test
+    @Test//in progress
     void completeSearchbarInDropdown() {    //tests autocomplete word in searchbar
        // assertThrows(.class, () -> new WordSuggestionProvider(null, database));
     }
 
-    @Test
+    @Test//in progress
     void completeWithoutAddingAnythingReturnsSomething() {  //tests recommended words from past
         Collection<String> result = autoCompleter.provideSuggestions(getRequest(("test")));
         assertEquals(Collections.emptyList(), result);
 
     }
 
-    @Test
+    @Test//in progress
     void completeReturnsMultipleResultsInDropdown() {   //tests list of recommended words below searchbar
         entry = new BibEntry();
         entry.setField(StandardField.TITLE, "testValueOne");
