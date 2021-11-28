@@ -38,6 +38,7 @@ public class AutoCompletionTest {
 
     private WordSuggestionProvider autoCompleter;
     private BibDatabase database;
+    BibEntry entry1, entry2;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -59,12 +60,10 @@ public class AutoCompletionTest {
 
     @Test
     void completeReturnsMultipleResultsInDropdown() {   //tests list of recommended words below searchbar
-        BibEntry entryOne = new BibEntry();
-        entryOne.setField(StandardField.TITLE, "testValueOne");
-        database.insertEntry(entryOne);
+        entry1 = new BibEntry();
+        entry1.setField(StandardField.TITLE, "testValueOne");
+        database.insertEntry(entry1);
         BibEntry entryTwo = new BibEntry();
-        entryTwo.setField(StandardField.TITLE, "testValueTwo");
-        database.insertEntry(entryTwo);
 
         Collection<String> result = autoCompleter.provideSuggestions(getRequest(("testValue")));
         assertEquals(Arrays.asList("testValueOne", "testValueTwo"), result);
