@@ -30,6 +30,7 @@ public class SearchFieldSynchronizer {
 //        }
     }
 
+    @Deprecated
     public boolean isPrevAttribute() {
         if (searchItemList.isEmpty()) {
             return false;
@@ -37,6 +38,7 @@ public class SearchFieldSynchronizer {
         return searchItemList.get(searchItemList.size() - 1).getItemType().equals("attribute");
     }
 
+    @Deprecated
     public boolean isPrevOperator() {
         if (searchItemList.isEmpty()) {
             return true; // no previous operator technically, but search shouldnt start with an operator
@@ -44,6 +46,7 @@ public class SearchFieldSynchronizer {
         return searchItemList.get(searchItemList.size() - 1).getItemType().equals("OR") || searchItemList.get(searchItemList.size() - 1).getItemType().equals("AND");
     }
 
+    @Deprecated
     public boolean isPrevBracket() {
         return searchItemList.get(searchItemList.size() - 1).getItemType().equals("bracket");
     }

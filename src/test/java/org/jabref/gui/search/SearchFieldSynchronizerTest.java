@@ -93,6 +93,7 @@ class SearchFieldSynchronizerTest {
         assertEquals(sync.searchItemList.get(2).getItem(), "Corona");
     }
 
+    @Deprecated
     @Test
     void testIsPrevAttribute() {
         //
@@ -113,6 +114,7 @@ class SearchFieldSynchronizerTest {
         assertEquals(true, sync.isPrevAttribute());
     }
 
+    @Deprecated
     @Test
     void testIsPrevOperator() {
         SearchFieldSynchronizer sync = new SearchFieldSynchronizer(searchField);
