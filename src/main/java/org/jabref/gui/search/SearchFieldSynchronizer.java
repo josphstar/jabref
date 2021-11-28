@@ -127,4 +127,8 @@ public class SearchFieldSynchronizer {
 //        }
 //    }
 
+    public void deleteEntrysInSearchItemList() {
+        searchItemList.clear();
+    }
+
 }

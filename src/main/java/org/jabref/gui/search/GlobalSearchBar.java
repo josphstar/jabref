@@ -130,7 +130,7 @@ public class GlobalSearchBar extends HBox {
 
         // Prototype DropDownMenu
         this.searchFieldSynchronizer = new SearchFieldSynchronizer(searchField);
-        this.dropDownMenu = new DropDownMenu(searchField, this, searchFieldSynchronizer);
+        this.dropDownMenu = new DropDownMenu(frame, searchField, this, searchFieldSynchronizer);
 
         // Prototype RecentSearch
         // Add to RecentSearch after searchbar loses focus
