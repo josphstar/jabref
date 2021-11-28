@@ -14,6 +14,7 @@ public class SearchFieldSynchronizer {
     String searchString;
 
     public SearchFieldSynchronizer(CustomTextField searchField) {
+        this.searchString = searchField.getText();
         searchItemList.addListener(new ListChangeListener<SearchItem>() {
             @Override
             public void onChanged(Change<? extends SearchItem> c) {
