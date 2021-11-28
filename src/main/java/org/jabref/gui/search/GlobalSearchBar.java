@@ -225,6 +225,7 @@ public class GlobalSearchBar extends HBox {
         this.stateManager.activeDatabaseProperty().addListener((obs, oldValue, newValue) -> stateManager.activeSearchQueryProperty().get().ifPresent(this::updateSearchResultsForQuery));
     }
 
+    // TODO: move to SearchFieldSynchronizer class
     private ArrayList<String> textFieldToList() {
         String str = searchField.getText();
         // splits a string "author:luh AND year:2013 OR author:\"lee smith\"" into
@@ -254,12 +255,12 @@ public class GlobalSearchBar extends HBox {
             }
         }
 
-      // TEXTFELD TEST
-        System.out.print("Textfeld Liste: ");
-        for (String word : list) {
-            System.out.print(word + " | ");
-        }
-        System.out.println();
+//        // TEXTFELD TEST
+//        System.out.print("Textfeld Liste: ");
+//        for (String word : list) {
+//            System.out.print(word + " | ");
+//        }
+//        System.out.println();
 
         return list;
     }

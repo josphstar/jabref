@@ -14,6 +14,7 @@ public class SearchFieldSynchronizer {
     String searchString;
 
     public SearchFieldSynchronizer(CustomTextField searchField) {
+        this.searchString = searchField.getText();
         searchItemList.addListener(new ListChangeListener<SearchItem>() {
             @Override
             public void onChanged(Change<? extends SearchItem> c) {
@@ -30,6 +31,7 @@ public class SearchFieldSynchronizer {
 //        }
     }
 
+    @Deprecated
     public boolean isPrevAttribute() {
         if (searchItemList.isEmpty()) {
             return false;
@@ -37,6 +39,7 @@ public class SearchFieldSynchronizer {
         return searchItemList.get(searchItemList.size() - 1).getItemType().equals("attribute");
     }
 
+    @Deprecated
     public boolean isPrevOperator() {
         if (searchItemList.isEmpty()) {
             return true; // no previous operator technically, but search shouldnt start with an operator
@@ -44,6 +47,7 @@ public class SearchFieldSynchronizer {
         return searchItemList.get(searchItemList.size() - 1).getItemType().equals("OR") || searchItemList.get(searchItemList.size() - 1).getItemType().equals("AND");
     }
 
+    @Deprecated
     public boolean isPrevBracket() {
         return searchItemList.get(searchItemList.size() - 1).getItemType().equals("bracket");
     }
@@ -88,7 +92,7 @@ public class SearchFieldSynchronizer {
             }
         }
         searchString = str.toString();
-        System.out.println("searchStringBuilder: " + searchString);
+//        System.out.println("searchStringBuilder: " + searchString);
         return searchString;
     }
 
@@ -117,14 +121,5 @@ public class SearchFieldSynchronizer {
     public String getSearchString() {
         return searchString;
     }
-
-//    public String getLastItem() {
-//        SearchItem item = searchItemList.get(searchItemList.size() - 1);
-//        String lastItem = item.getItemType();
-//
-//        if (lastItem.endsWith(":")) {
-//
-//        }
-//    }
 
 }
